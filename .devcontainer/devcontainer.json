@@ -1,12 +1,69 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "mkhl.direnv"
-      ]
-    }
-  },
-  "image": "ghcr.io/cachix/devenv/devcontainer:latest",
-  "overrideCommand": false,
-  "updateContentCommand": "devenv test"
+	"name": "Ubuntu",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+			"moby": true,
+			"azureDnsAutoDetection": true,
+			"installDockerBuildx": true,
+			"installDockerComposeSwitch": true,
+			"version": "latest",
+			"dockerDashComposeVersion": "v2"
+		},
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+			"version": "latest",
+			"helm": "latest",
+			"minikube": "latest"
+		},
+		"ghcr.io/devcontainers/features/git-lfs:1": {}
+	},
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [8080, 8081, 30000, 30001],
+	
+	"portsAttributes": {
+		"8080": {
+			"label": "Frontend",
+			"onAutoForward": "notify"
+		},
+		"8081": {
+			"label": "Backend"
+		}
+	},
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a",
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				 "bbenoist.nix",
+				 "catppuccin.catppuccin-vsc",
+				 "catppuccin.catppuccin-vsc-icons",
+				 "cweijan.vscode-database-client2",
+				 "docker.docker",
+				 "eamodio.gitlens",
+				 "github.copilot-chat",
+				 "ms-azuretools.vscode-containers"
+			],
+			"settings": {
+				"workbench.colorTheme": "Catppuccin Frappé",
+				"workbench.iconTheme": "catppuccin-frappe",
+				"editor.cursorSmoothCaretAnimation": "on",
+				"editor.cursorBlinking": "smooth"
+			}
+		}
+	}
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
 }
